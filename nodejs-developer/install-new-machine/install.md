@@ -51,6 +51,15 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
    ```powershell
    wsl --install -d Ubuntu-20.04
    ```
+- **Starts the default distribution in the Linux user's home directoryl**
+   ```powershell
+   wsl ~
+   ```
+- **restart WSL service in poweshell**
+   ```powershell
+   Get-Service LxssManager | Restart-Service
+   ```
+
    
    
 
