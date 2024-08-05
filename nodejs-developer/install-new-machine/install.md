@@ -11,6 +11,13 @@
 
 * **ตรวจสอบเวอร์ชัน Windows:** WSL2 รองรับ Windows 10 เวอร์ชัน 2004 ขึ้นไป และ Windows 11 ทุกเวอร์ชัน
 * **เปิดใช้งาน Virtual Machine Platform:** เข้าไปที่ Settings > Update & Security > For developers แล้วเปิดสวิตช์ "Virtual Machine Platform" **และรีสตาร์ทเครื่อง**
+
+**ถ้า cmd ไม่รู้จัก WSL ให้ ปิด Virtual Machine Platform ใน Turn on Windown feature และ restart**
+ จากนั้น ติดตั้งใหม่ด้วย CLI แทน(เมือรันเสร็จแล้ว ให้ restart ก่อนดำเนินการขึ้นถัดไป)
+ ```
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+ ```
+
 * **อัปเดต Windows:** ตรวจสอบและติดตั้งอัปเดต Windows ล่าสุด
 
 
@@ -18,6 +25,7 @@
 ### ขั้นตอนที่ 2: ติดตั้ง WSL2
 
 1. **เปิด PowerShell ในฐานะ Administrator**
+
 2. **อัปเดต WSL:**
    ```powershell
    wsl --install
@@ -67,9 +75,13 @@
    ```bash
    source ~/.bashrc
    ```
-3. **ติดตั้ง Node.js:**
+3. **ติดตั้ง Node.js latest version:**
    ```bash
    nvm install node
+   ```
+   **ติดตั้ง Node.js แบบ ระบุ version ตัวอย่างลง version20:**
+   ```bash
+   nvm install 20
    ```
 
 ### ขั้นตอนที่ 6: ติดตั้ง Docker Desktop
