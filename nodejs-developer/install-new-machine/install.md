@@ -76,6 +76,7 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 
 ### ขั้นตอนที่ 5: ติดตั้ง NVM
 
+ให้ เปิด Uubuntu และ ดำเนินการ ตามนี้
 1. **ดาวน์โหลด script ติดตั้ง:**
    ```bash
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -88,7 +89,7 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
    ```bash
    nvm install node
    ```
-   **ติดตั้ง Node.js แบบ ระบุ version ตัวอย่างลง version20:**
+   **หรือ ติดตั้ง Node.js แบบ ระบุ version ตัวอย่างลง version20:**
    ```bash
    nvm install 20
    ```
@@ -107,12 +108,17 @@ dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux 
 ### การใช้งาน NVM และ Docker Desktop
 
 * **NVM:**
-  * **ตรวจสอบเวอร์ชัน Node.js:** `nvm list`
+  * **ตรวจสอบเวอร์ชัน Node.js:** `nvm list` **หรือ ตรวจสอบ avaliable verison บน remote** `nvm ls-remote`
   * **เปลี่ยนเวอร์ชัน Node.js:** `nvm use <version>`
   * **ติดตั้งเวอร์ชัน Node.js ใหม่:** `nvm install <version>`
+  * **ถอนการติดตั้ง**  `nvm uninstall <version>`
+  * **กำหนด default version** `nvm alias default <version>`
+  * **คำสั่งเพิ่มเติม** [ดูรายละเอียด](nvm-command.md)
 * **Docker:**
   * **สร้าง Docker Image:** `docker build -t my-image .`
+  * **สร้าง Docker Image แบบ ระบุ File:** `docker build -f path/Dockerfile -t my-image .`
   * **รัน Docker Container:** `docker run -it my-image`
+  * **รัน Docker Container แบบ ระบุชื่อ Container:** `docker run --name <container-name> -it my-image`
 
 ### ตัวอย่างการใช้งาน
 
