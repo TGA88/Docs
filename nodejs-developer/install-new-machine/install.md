@@ -1,5 +1,5 @@
 
-## สร้างบทความสอน: ติดตั้ง WSL2, Ubuntu 20.04, NVM และใช้งาน Docker Desktop บน Windows 10/11
+## เตรียมเครื่องใหม่สำหรับ พัฒนา program ด้วย NodeJs: ติดตั้ง WSL2, Ubuntu 20.04, NVM และใช้งาน Docker Desktop บน Windows 10/11
 
 ### บทนำ
 
