@@ -1,0 +1,3 @@
+project ประกอบด้วย foundation-commponent , theme,style,font,icons สำหรับ share ให้ app และ feature-component นำไปใช้ 
+- foundation-commponent => Share ให้ feature-component นำไปใช้
+- style,theme,font => share ให้ app นำไปใช้ apply กับ feature-component หรือ ให้ storybook project นำไปใช้ เพื่อ render test visualize feature-component ต่าง
