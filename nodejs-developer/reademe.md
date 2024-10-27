@@ -57,5 +57,6 @@
     - create mock-server (postman-mock-collection,mockoon or Mountebank )
     
 ---
-
+## การทำ Code review ด้วย sonar qube
+    - install sonar server,scanner and configuration
 ### Frontend Developer
