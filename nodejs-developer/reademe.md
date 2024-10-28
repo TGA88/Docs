@@ -1,8 +1,8 @@
 ## การเตรียมพร้อม สำหรับ NodeJS Developer
-- ติดตั้ง Tools ที่จำเป็น สำหรับ Frontend และ Api developer
 - สร้าง Workspace (pnpm+nx)
     - global-workspace
     - system-workspace
+- ติดตั้ง Tools ที่จำเป็น สำหรับ Frontend และ Api developer
 - สร้าง และ config Project แต่ละ ประเภท สำหรับ Frontend developer
     - สร้าง APP Project 
         - web (Nextjs)
@@ -14,6 +14,7 @@
         - *ui-react-hooks
         - ui-state-redux
         - *ui-logic
+        - mock-api
 - สร้าง และ config Project แต่ละ ประเภท สำหรับ API developer
     - สร้าง API Project
         - webapi (fastify)
