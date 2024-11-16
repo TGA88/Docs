@@ -9,8 +9,11 @@
         - visualize UI and Features Component(Storybook)
     - สร้าง Library 
         - feature
-        - *ui-component
-        - *ui-foundation
+        - *ui-foundations(icons,font,CssVariable เช่น colors,space,size)
+        - *ui-component-mui(เก็บ component ที่Customจาก mui ,style,theme)
+        - *ui-core(Base Lib**ห้ามมี3rd party lib นอกจาก native lib ของreact** -types,interface,context, สำหรับทุกระบบ ที่ไม่เกี่ยวกับ theme หรือ style)
+        - *ui-core-nextjs(impletation componentต่างสำหรับ Nextjs เช่น NextRouterAdapter ที่ implement ReouterAdapterInterface จาก ui-core)
+        - *ui-core-remix
         - *ui-react-hooks
         - ui-state-redux
         - *ui-logic
@@ -26,6 +29,8 @@
         - core
         - store (prisma,sequilze,database-driver and etc.)
         - *api-logic
+        - *api-core(Base Lib**ห้ามมี3rd party lib นอกจาก native lib** จะเก็บ types,interface,abstract class, สำหรับทุกระบบ เช่น pub-sub,queue,fileStorage)
+        - *api-core-aws(จะ implement interace ,abstract class จาก api-core เช่น implement publisher,consumer client ด้วย sns,sqs,fileStorage ด้วย S3)
         - *api-fastify-plugin (custom-fastify-plugin)
 
 ## การจัดการ version

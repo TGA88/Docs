@@ -2,16 +2,19 @@
 
 - [NX Setup](#nx-setup)
   - [install and config nx tasks and cache](#ติดตั้ง-nx-และ-init-config)
-- commitizen (conventional commit)
-- eslint
-    - frontend(react,react-hooks)
-    - api (only typescript)
-    - jest-plugin
-- prittier
-- typescript
-- jest
-- storybook
-- msw
+- [git-cz (conventional commit) ](#ติดตั้ง-committzen) 
+- [typescript](#setup-typescript)
+- [Tsup](#setup-tsup)
+- [jest](#setup-jest)
+- [prittier](#setup-prettier)
+- [eslint](#set-eslint)
+- [vite และ plugin](#setup-vite-and-rollup)
+  - @vitejs/react
+  - @node-exteral
+  - @dts
+  - @reserve-decorative
+- [msw](#setup-msw)
+
 
 
 - create base config
@@ -69,6 +72,10 @@ npm pkg set scripts.build="nx build"
 npm pkg set scripts.build:all="nx run-many --target=build --all"
 npm pkg set scripts.release="nx run-many --target=build --all"
 npm pkg set scripts.release:all="nx run-many --target=release --all && nx run-many --target=release-storybook --all"
+
+
+
+ 
 
 ```
 
@@ -265,4 +272,260 @@ module.exports = {
 };
 ```
 ---
-## Setup eslint
+## Setup typescript
+เราจะ setup tsconfig.json เพื่อเอาไว้ให้ editor อย่าง vscode ใช้ validate typechecking and syntax ตอน ที่เราเขียน code เท่านั้น ส่วนการ  build จะ ใช้ package ที่ชื่อ tsup ในการ compile 
+> **ยกเว้นProjectType ที่ใช้ fastify จะใช้ tsc เนื่องจาก fastify-cli ยังไม่ลองรับ compiler ตัวอื่นนอกจาก tsc**
+
+#### ติดดั้ง และ init typescript
+```bash
+pnpm add -Dw typescript@latest
+
+pnpm tsc --init
+```
+#### สร้าง tsconfig.base.json สำหรับ Share config ให้ base tsconfig ของ project type ประเภทต่างๆใน Workspace 
+- create tsconfig.base.json
+
+#### สร้าง tsconfig base แต่ละ project type ของ system-workspace
+- create tsconfig-web.base.json
+- create tsconfig-webapi.base.json
+- create tsconfig-feature.base.json
+- create tsconfig-ui-state-redux.base.json
+- create tsconfig-api-service.base.json
+- create tsconfig-api-core.base.json
+- create tsconfig-api-store.base.json
+- create tsconfig-api-client.base.json
+#### สร้าง tsconfig base แต่ละ project type ของ global-workspace(shared-packages)
+- create tsconfig-ui.base.json
+- create tsconfig-ui-core.base.json
+- create tsconfig-ui-react-hooks.base.json
+- create tsconfig-share-logic.base.json
+
+---
+
+## Set Type สำหรับ sub project ประเภทต่าง
+
+```bash 
+# install type สำหรับ sub project type  nodejs
+pnpm add -Dw @types/node
+
+# install type สำหรับ sub project type  ui-component และ features
+pnpm add -Dw @types/react @types/react-dom
+# 
+```
+
+---
+
+## Setup Tsup
+Tsup เป็นเครื่องมือสำหรับ build TypeScript โดยเฉพาะ ที่เน้นความเร็วและใช้งานง่าย มาดูข้อดีของ Tsup กัน:
+
+1. ความเร็ว:
+- ใช้ esbuild เป็น bundler ทำให้ build ได้เร็วมาก
+- มี watch mode สำหรับ development
+
+2. ง่ายต่อการใช้งาน:
+- ตั้งค่าน้อย ส่วนใหญ่มีค่า default ที่เหมาะสมอยู่แล้ว
+- รองรับ TypeScript โดยตรง ไม่ต้องตั้งค่าเพิ่มเติม
+
+3. ความสามารถ:
+- สร้าง bundle ได้ทั้ง ESM และ CommonJS
+- รองรับ Tree-shaking 
+- มี minification ในตัว
+- split code อัตโนมัติ
+
+เหมาะสำหรับ:
+- การสร้าง npm packages
+- การ build TypeScript libraries
+- โปรเจคที่ต้องการความเร็วในการ build
+- ต้องการ setup ที่ง่าย ไม่ซับซ้อน
+
+```bash
+#ระบุให้ใช้ version 6.6.0 เพราะ version 8 มีปัญหา เรื่อง javascript heap out of memory ในกรณีที่ มี file มากเกินในกาน compile 1 ครั้ง 
+pnpm add -Dw tsup@^6.6.0
+```
+#### ทำการสร้าง file tsup config เอาไว้ที่ root workspace เพื่อเอาไว้ใช้ ใน แต่ ละ project type
+
+```typescript
+// tsup.lib.config
+import { defineConfig } from 'tsup';
+
+export default defineConfig({
+  entry: ['src/index.ts', 'src/**/*.ts', 'src/**/*.tsx','!**/*test*/**'],
+  format: ['cjs', 'esm'],
+  splitting: true,
+  sourcemap: true,
+  clean: true,
+  minify: true,
+  dts: true,
+  outDir: 'dist',
+});
+
+```
+
+---
+
+### Setup Jest
+
+```bash
+
+# install jest และ eslint เพื่อให้ ทุก project type สามารถใช้ jest ได้
+pnpm add -Dw jest @types/jest ts-jest
+
+# intall testing tools สำหรับ Next.js project
+pnpm add -Dw jest-environment-jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event identity-obj-proxy
+
+```
+
+create jest.config.ts ที่ root workspace
+```typescript
+// jest.config.ts
+import type { Config } from 'jest';
+import { defaults } from 'jest-config';
+
+const baseConfig: Config = {
+  preset: 'ts-jest',
+  verbose: true,
+  moduleFileExtensions: [...defaults.moduleFileExtensions],
+  transform: {
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        isolatedModules: true,
+        diagnostics: {
+          ignoreCodes: ['TS151001']
+        }
+      }
+    ]
+  },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.stories.{ts,tsx}',
+    '!src/**/index.{ts,tsx}',
+    '!src/**/*.test.{ts,tsx}'
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'json-summary'],
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
+    }
+  }
+};
+
+export default baseConfig;
+``` 
+
+---
+
+### Setup Prettier
+
+```bash
+# install prettier at root workspace
+pnpm add -Dw prettier 
+
+npm pkg set scripts.format:all="nx run-many --target=format --all"
+npm pkg set scripts.format-check:all="nx run-many --target=format-check --all"
+```
+---
+
+## Set EsLint
+Eslint คือ tools ที่ช่วยในการ ตรวจสอบ code syntax เพือลดช้อผิดพลาด และ ช่วยให้ developer ทุกคน เขียน code ภายใต้ Code standard เดียวกัน ซึ่งจะทน้าที่หลัก 2 ส่วน คือ 
+- Code Qulity rule (code standard ต่างๆ การตั้งชื่อตัวแปร การตั้งชื่อ function เป็น ต้น) 
+- Formatter rule (เช่น จบคำสั่งด้วย ; หรือ , เป็น ต้น และที่ Linter ต้องมี formatter เพื่อไว้ fix code ให้เป็นไปตาม quality rule) 
+> เราจะใช้ Eslint เฉพาะในส่วน ของ Quality rule เท่านั้น ส่วน การ formatter จะใช้ prittier แทน  
+
+```bash 
+#  install at root workspace
+pnpm add -Dw eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin @eslint/js
+
+#install eslint plugin สำหรับ react,nextjs ถ้าใน workspace มี project type ใช้  nextjs,react หลายๆProject
+pnpm add -Dw @next/eslint-plugin-next eslint-plugin-react eslint-plugin-react-hooks
+
+# install jest และ eslint เพื่อให้ ทุก project type สามารถใช้ jest ได้
+pnpm add -Dw eslint-plugin-jest
+
+# install และ config prittier ให้ disable rule ที่ซ้ำกับ eslint
+pnpm add -Dw eslint-config-prettier 
+
+
+```
+สร้าง file config ไว้ที่ root workspace
+```typescript
+// root-eslint.config.mjs
+import js from '@eslint/js';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import jestPlugin from 'eslint-plugin-jest';
+
+export default {
+  root: true,
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jest/recommended',
+    'prettier' // ใช้เพื่อ disable rules ที่ขัดแย้งกับ prettier เท่านั้น
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: {
+    '@typescript-eslint': tseslint,
+    'jest': jestPlugin
+    // ไม่ต้องใช้ eslint-plugin-prettier
+  },
+  rules: {
+    // typescript rules
+    'no-console': 'warn',
+    '@typescript-eslint/no-unused-vars': ['error', { 
+      argsIgnorePattern: '^_',
+      varsIgnorePattern: '^_'
+    }],
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn'
+  }
+};
+```
+
+---
+
+## Setup Vite and Rollup
+สำรหรับ ใช้ build react component libary และ ใช้ Rollup plugin เพื่อช่วยในการทำ Tree shaking
+```bash
+# install vite และ plugin
+pnpm add -Dw vite @vitejs/plugin-react vite-plugin-dts vite-plugin-lib-inject-css vite-plugin-sass-dts
+
+# install Rollup Plugin 
+# rollup-plugin-node-externals  สำหรับ unbundle dependency ใน package.json
+# rollup-plugin-preserve-directives เพื่อให้ ไม่ถูก remove comment 'use client' หลังจาก bunble
+pnpm add -Dw rollup-plugin-node-externals rollup-plugin-preserve-directives
+
+# instll glob สำหรับใช้ ในการ config vite ใน sub project type ui,features
+pnpm add -Dw glob
+```
+---
+
+## Setup Storybook (at project level)
+```bash
+pnpm add -D @storybook/cli @storybook/addon-essentials @storybook/addon-interactions @storybook/addon-links @storybook/blocks @storybook/react @storybook/react-vite @storybook/testing-library
+
+#  MSW Storybook addon
+pnpm add -D msw-storybook-addon @mswjs/data
+
+```
+---
+
+## Setup Msw
+
+เอาไว้ใช้ Mock Api บน Environment Browser หรือ Nodejs เพื่อให้เป็น อิสระจาก library httpClient อย่าง axios หรือ fetch ทำให้เวลาเปลี่ยน lib จาก fetch ไปใช้ axios แล้ว จะทำให้เราไม้ต้อง แก้ไข mock httpclient 
+
+```bash
+
+# ติดตั้ง MSW ที่ root workspace เพื่อ แชร์ ไปใช้ที่ sub project type ต่างๆ และ จะ init config ที่ ระดับ project 
+pnpm add -D msw 
+
+```
+
+---

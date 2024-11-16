@@ -201,9 +201,71 @@ packages:
 EOF
 ```
 
+```
 
+// โครงสร้าง root workspace
+.
+|-- feedos-example-system
+    |-- workspaces
+        |-- node-app
+            ├── apps/
+            │   ├── web/
+            │   │   └── src/
+            │   │       └── components/
+            │   └── api/
+            ├── libs/
+            │   ├── features/
+            │   │   ├── src/
+            │   │   │   ├── components/
+            │   │   │   └── stories/
+            │   │   └── package.json
+            │   └── ui/
+            │       ├── src/
+            │       │   ├── components/
+            │       │   └── stories/
+            │       └── package.json
+            └── storybook-host/
+                └── example/
+                    ├── src/
+                    │   └── stories/
+                    ├── .storybook/
+                    │   ├── main.ts
+                    │   ├── preview.ts
+                    │   ├── manager.ts
+                    │   └── theme.ts
+                    ├── package.json
+                    └── tsconfig.json
 
-
+// โครงสร้างLibโปรเจค
+├── libs/
+│   └── features/
+│       ├── src/
+│       │   ├── components/
+│       │   │   └── UserList/
+│       │   │       ├── UserList.tsx
+│       │   │       ├── UserList.stories.tsx
+│       │   │       └── UserList.test.tsx
+│       │   └── mocks/
+│       │       ├── handlers/
+│       │       │   ├── index.ts
+│       │       │   ├── auth.ts
+│       │       │   └── users.ts
+│       │       ├── data/
+│       │       │   ├── index.ts
+│       │       │   └── users.ts
+│       │       └── db.ts
+│       └── package.json
+└── storybook-host/
+    └── example/
+        ├── .storybook/
+        │   ├── main.ts
+        │   ├── preview.ts
+        │   └── test-runner.ts
+        └── src/
+            └── mocks/
+                └── browser.ts
+```
+---
 
 https://dev.to/vinomanick/create-a-monorepo-using-pnpm-workspace-1ebn
 
