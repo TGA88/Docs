@@ -9,8 +9,9 @@
         - visualize UI and Features Component(Storybook)
     - สร้าง Library 
         - feature
-        - *ui-foundations(icons,font,CssVariable เช่น colors,space,size)
-        - *ui-component-mui(เก็บ component ที่Customจาก mui ,style,theme)
+        - *ui-foundations(icons,font,CssVariable เช่น colors,space,size สำหรับ share ใช้ ไปท่ี่ ui-mui,ui-tailwind เพื่อ create theeme)
+        - *ui-mui(เก็บ component ที่Customจาก mui ,style,theme)
+        - *ui-tailwind(เก็บ component ที่Customจาก tailewind ,style,theme, preset)
         - *ui-core(Base Lib**ห้ามมี3rd party lib นอกจาก native lib ของreact** -types,interface,context, สำหรับทุกระบบ ที่ไม่เกี่ยวกับ theme หรือ style)
         - *ui-core-nextjs(impletation componentต่างสำหรับ Nextjs เช่น NextRouterAdapter ที่ implement ReouterAdapterInterface จาก ui-core)
         - *ui-core-remix

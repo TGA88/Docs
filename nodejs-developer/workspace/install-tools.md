@@ -370,7 +370,10 @@ export default defineConfig({
 # install jest และ eslint เพื่อให้ ทุก project type สามารถใช้ jest ได้
 pnpm add -Dw jest @types/jest ts-jest
 
-# intall testing tools สำหรับ Next.js project
+# Jest: 'ts-node' is required for the TypeScript configuration files.
+pnpm add -Dw ts-node
+
+# intall testing tools สำหรับ Next.js หรือ feature project ที่ต้องใช้ renderHooks เพื่อ Test CustomHooks
 pnpm add -Dw jest-environment-jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event identity-obj-proxy
 
 ```
@@ -500,6 +503,7 @@ export function createBaseConfig({ tsConfigPath = './tsconfig.json' } = {}) {
         // เพิ่ม globals สำหรับ browser environment
         globals: {
           ...globals.browser, // จะได้ window, document, localStorage, etc. ทำให้ eslint ไม่ฟ้อง error
+          ...global.jest
         },
       },
       // กำหนด plugins
@@ -540,11 +544,19 @@ export function createBaseConfig({ tsConfigPath = './tsconfig.json' } = {}) {
           sourceType: 'module',
         },
         globals: {
-          ...globals.node // Config สำหรับ Node.js code (เช่น config files)
-        }
+          ...globals.node, // Config สำหรับ Node.js code (เช่น config files)
+        },
       },
     },
-
+    // แยก config สำหรับไฟล์ test โดยเฉพาะ
+    {
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+      languageOptions: {
+        globals: {
+          ...globals.jest, // เพิ่ม jest globals
+        },
+      },
+    },
     // Prettier config (ต้องอยู่ท้ายสุด)
     {
       files: ['**/*.{js,jsx,ts,tsx,mts,cts}'],
@@ -595,7 +607,12 @@ pnpm add -D msw-storybook-addon @mswjs/data
 ```bash
 
 # ติดตั้ง MSW ที่ root workspace เพื่อ แชร์ ไปใช้ที่ sub project type ต่างๆ และ จะ init config ที่ ระดับ project 
-pnpm add -D msw 
+pnpm add -Dw msw
+
+# ใช้ jest-fixed-jsdom แทน jest-environment-jsdom เพื่อ แก้ปัญหา msw v2 Error Request/Response/TextEncoder is not defined (Jest)
+pnpm add -Dw jest-fixed-jsdom
+
+
 
 ```
 
