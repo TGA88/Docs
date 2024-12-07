@@ -590,15 +590,7 @@ pnpm add -Dw glob
 ```
 ---
 
-## Setup Storybook (at project level)
-```bash
-pnpm add -D @storybook/cli @storybook/addon-essentials @storybook/addon-interactions @storybook/addon-links @storybook/blocks @storybook/react @storybook/react-vite @storybook/testing-library
 
-#  MSW Storybook addon
-pnpm add -D msw-storybook-addon @mswjs/data
-
-```
----
 
 ## Setup Msw
 
