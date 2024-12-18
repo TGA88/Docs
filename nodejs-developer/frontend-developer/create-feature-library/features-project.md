@@ -80,10 +80,10 @@ pnpm add -D react react-dom
 # add @tanstack/react-query/
 pnpm add -w @tanstack/react-query
 
-# add mui
+# add tailwind
 pnpm add -Dw tailwindcss postcss autoprefixer 
 
-# add tailwind
+# add mui
 pnpm add -w @mui/material @emotion/react @emotion/styled @mui/icons-material @mui/x-data-grid
 ```
 
