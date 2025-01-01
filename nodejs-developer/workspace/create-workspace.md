@@ -35,6 +35,36 @@
  - fos-api-logic
  - fos-api-fastify-plugin
 
+ ```bash
+
+# global-libs
+    #front
+    - ui-common (เก็บ component , themme, preset ที่จะนำไปใช้ ใน web,storybook)
+    - ui-functions (สำหรับ pure function ที่ ใช้ 3partylib ที่ใช้ได้เฉพาะใน browser)
+    - ui-customhooks-react (เก็บ customhook ใช้ share ใน ทุก system workspace เช่น useDebounce)
+    - ui-router-nextjs (implementation ui-router ของ next-js)
+    - ui-router (ใช้เก็บ type,interface,component ที่เป็น Base สำหรับ เรื่อง route)
+
+    # api
+    - api-core (ใช้เก็บ type,interface,abstract-class ที่เป็น base ให้ implementation class นำไปใช้ เช่น producer กับ consumer ที่ api-communication-aws จะนำไป implememt ด้วย sns และsqs )
+    - api-communication-aws
+    - api-functions (จะต้องเป็น pure funtion ที่รันได้เฉพาะใน Nodejs และต้อง ทีีไม่มี side effect[การ call aps หรือ connect db,external service] เช่น ConvertDateFormat, CheckEmailFormat เป็นต้น)
+    - api-plugin-fastify (สำหรับใช้ได้ในทุกๆ system workdspace)
+
+    # share
+    - common-functions (pure function ที่ executeได้ทั้ง ใน browser และ nodejs)
+
+# system-libs
+
+    # front
+    - ui-state-redux
+    - feature-xxx
+
+    #  api
+    - api-plugin-fastify
+
+ ```
+
 ### System workspace
 คือ Workspace ที่จะประกอบไปด้วย Project ที่เกียวข้องกับ ระบบ งานนั้น เช่น
 ระบบ CMS จะประกอบไปด้วย

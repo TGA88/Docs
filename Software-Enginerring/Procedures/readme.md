@@ -1,10 +1,14 @@
 ## ขั้นตอนการวิเคราะ และ ออกแบบ ระบบ 
 หลังจาก ผู้ที่มีหน้าที่ในการ เก็บรวมรวมและสรุปสิ่งที่ลูกค้าอยากได้ (PO/BA/SA ขึ้นอยู่กับองกร กำหนดว่าเป็นหน้าที่ตำแหน่งไหน) แล้ว จะทำการบันทึก เป็น Business Process flow, Activity Process flow แล้ว ดำเนินการ ตามขั้นตอน ต่างๆ ดังนี้ ให้เรียบร้อย ก่อน เริ่มเข้ากระบวนการ พัฒนา หรือ ผลิต
 
-req collective => Business flow=>activity flow=> UserStory => UseCase and Acceptance => WireFrame and Test Senarios => Continuous Confirmation
+req collective => Biz-Process/Biz-Feature flow => activity/userstory flow=> Action/Biz-Function flow => UseCase and Acceptance => WireFrame and Test Senarios => Continuous Confirmation
 
-
-
+Project => Az-Epic
+BizProcessItem => Az-Feature
+    - ActivityProcessFlow 
+        - ActivityProcessItem => จะเป็นแค่ รหัส เพื่อนำไปรวมกับ Az-PBI เนื่องจาก เราAdapt ใช้ Az-Epic เป็น Project แทน ทำให้ Level ของ โตรงสร้างไม่พอ
+            - ActionItem => Az-PBI (ประกอบด้วย UseCase+Acceptance)
+                - UseCase => Az-Task
 ### Business Process flow
 
 ---
