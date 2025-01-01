@@ -62,6 +62,11 @@
 
     #  api
     - api-plugin-fastify
+    - xxx-api
+        - core
+        - service
+    - xxx-data
+        - store-prisma | sequilize | mikroorm
 
  ```
 
