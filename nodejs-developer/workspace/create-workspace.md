@@ -57,7 +57,7 @@
 # system-libs
 
     # front
-    - ui-state-redux
+    - ui-state-redux (เก็บ slice แต่ createStore จะอยู่ที่ Entrypoint project เช่น web)
     - feature-xxx
 
     #  api
