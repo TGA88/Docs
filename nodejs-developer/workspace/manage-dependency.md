@@ -1,5 +1,17 @@
 # การจัดการ Dependency ใน Workspaces
 
+package จะมี2 ระดับ
+- package ระดับ workspace
+- package ระดับ project
+
+
+Package จะประกอบด้วย
+- dependency
+- devDependency
+- peerDependency
+
+
+
 ## การจัดการ Package ระดับ Project
 
 
