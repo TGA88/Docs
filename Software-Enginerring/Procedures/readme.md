@@ -6,9 +6,29 @@ req collective => Biz-Process/Biz-Feature flow => activity/userstory flow=> Acti
 Project => Az-Epic
 BizProcessItem => Az-Feature
     - ActivityProcessFlow 
-        - ActivityProcessItem => จะเป็นแค่ รหัส เพื่อนำไปรวมกับ Az-PBI เนื่องจาก เราAdapt ใช้ Az-Epic เป็น Project แทน ทำให้ Level ของ โตรงสร้างไม่พอ
+        - ActivityProcessItem/หรือที POชอยเรียก UserStory => จะเป็นแค่ รหัส เพื่อนำไปรวมกับ Az-PBI เนื่องจาก เราAdapt ใช้ Az-Epic เป็น Project แทน ทำให้ Level ของ โตรงสร้างไม่พอ
             - ActionItem => Az-PBI (ประกอบด้วย UseCase+Acceptance)
                 - UseCase => Az-Task
+
+```
+AZ-Org = Team
+|- Az-Project = Module/system (AuditHub)
+    |- Az-Epic =  Biz-Feature (AuditProfile)
+        |- Az-Feature = Biz-UserStory/ActivityItem (MakeProfile)
+            |- Az-PBI = Biz-Function/ActionItem (Create,List,Filter,..etc)
+                |- Az-Task = Program-Function (unit-test,api,ui)
+```
+
+แต่ถ้า JIRA จะมีความลึกแบบนี้
+```
+Project 
+    |- Theme = Module/system (Audithub)
+        |- epic = Biz-Feature(AuditProfile)
+            |- Story =  Biz-UserStory/ActivityItem (MakeProfile)
+                |- task = Biz-Function
+                    |- subtask = Program Function
+```
+
 ### Business Process flow
 
 ---
