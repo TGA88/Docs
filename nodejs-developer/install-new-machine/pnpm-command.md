@@ -95,7 +95,7 @@ corepack --version
 
 ## PMPM
 
-
+pnpm install จะ default install peer-dependencies ให้ auto ตั้งแต่ version 7
 
 ```bash
 #  check version
@@ -129,4 +129,19 @@ pnpm -F <projectname> --prod deploy <destination path>
 
 # list package version
 
+```
+
+### การแก้ปัญหา คำสั่ง pnpm deploy ไม่ยอม rewrite version ที่ใช้ workspace protocal 
+
+
+
+```bash
+RUN pnpm --recursive run build \
+	&& pnpm --filter <package> deploy --prod pruned \
+	&& cd pruned \
+	&& pnpm pack \
+	&& tar -zxvf *.tgz package/package.json \
+	&& rm package.json \
+	&& mv package/package.json package.json \
+	&& rm *.tgz
 ```
